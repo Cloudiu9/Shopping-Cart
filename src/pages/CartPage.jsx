@@ -1,6 +1,10 @@
+import Header from "../components/Header";
+
 export default function CartPage() {
   return (
-    <>
+    <div id="cart">
+      <Header />
+
       <h2>Items in cart:</h2>
       <ul>
         <li>Item 1</li>
@@ -9,6 +13,6 @@ export default function CartPage() {
       </ul>
 
       <button>Checkout</button>
-    </>
+    </div>
   );
 }
