@@ -1,0 +1,17 @@
+- need header with navbar
+- use https://fakestoreapi.com/ or similar
+- use react-router-dom and react testing library
+- use tailwind to style
+
+Home 
+- cool images/design
+
+Shop
+- card elements for each product
+- card has input field for product quantity with increment/decrement buttons
+- card has an Add to cart button
+- if items in cart/are added, display in navbar next to 'Shopping cart' icon
+
+Cart
+- displays all 'added to cart' items and their quantities
+- checkout button with confirmation popup onclick
