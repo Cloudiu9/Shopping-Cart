@@ -1,32 +1,7 @@
-import { useEffect, useState } from "react";
-import ErrorPage from "../pages/ErrorPage";
+import useAPIFetch from "../helpers/useAPIFetch";
 
 export default function ShopCard() {
-  const [items, setItems] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // async
-  useEffect(() => {
-    async function getItems(url) {
-      try {
-        // reset to make sure it's empty
-        setItems(null);
-
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`There's been an issue: ${res.message}`);
-
-        const data = await res.json();
-        setItems(data); // store all 20 itemss for now (id starts at 1)
-      } catch (err) {
-        setItems(null);
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    getItems("https://fakestoreapi.com/products");
-  }, []);
+  const { loading, items, error } = useAPIFetch();
 
   return (
     <div className="grid grid-flow-col grid-rows-4 gap-4">
@@ -45,7 +20,7 @@ export default function ShopCard() {
                 <div className="flex items-center space-x-3 mb-6">
                   <span className="bg-brand-softer border border-brand-subtle text-fg-brand-strong text-xs font-medium px-1.5 py-0.5 rounded-sm">
                     <svg
-                      class="w-5 h-5 text-fg-yellow"
+                      className="w-5 h-5 text-fg-yellow"
                       aria-hidden="true"
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"

@@ -1,10 +1,13 @@
+import Carousel from "../components/Carousel";
 import Header from "../components/Header";
+import Hero from "../components/Hero";
 
 export default function HomePage() {
   return (
     <div id="home">
       <Header />
-      <h1>Home Page</h1>
+      <Hero />
+      <Carousel />
     </div>
   );
 }
