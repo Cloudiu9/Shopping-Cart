@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import useAPIFetch from "../helpers/useAPIFetch";
 
 export default function ShopCard() {
@@ -34,14 +35,15 @@ export default function ShopCard() {
                     {item.rating.rate}
                   </span>
                 </div>
-                <a href="#">
+                {/* https://stackoverflow.com/questions/71010211/react-route-to-a-specific-product-details-page-from-a-product-page */}
+                <Link to={`/shop/${item.id}`}>
                   <h5 className="text-xl text-heading font-semibold tracking-tight">
                     <img
                       src={item.image}
                       style={{ width: "300px", height: "300px" }}
                     />
                   </h5>
-                </a>
+                </Link>
                 <div className="flex items-center justify-between mt-6">
                   <span className="text-3xl font-extrabold text-heading">
                     {item.price}$

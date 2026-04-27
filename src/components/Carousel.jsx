@@ -46,7 +46,7 @@ export default function Carousel() {
 
   // used help for this
   return (
-    <div className="relative w-full">
+    <div className="relative w-full pb-30 pt-30">
       <div
         ref={scrollRef}
         onScroll={handleScroll}

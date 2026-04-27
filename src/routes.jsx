@@ -2,6 +2,9 @@ import HomePage from "./pages/HomePage";
 import ShopPage from "./pages/ShopPage";
 import CartPage from "./pages/CartPage";
 import ErrorPage from "./pages/ErrorPage";
+import ProductPage from "./pages/ProductPage";
+
+// https://www.theodinproject.com/lessons/node-path-react-new-react-router
 
 const routes = [
   {
@@ -13,6 +16,11 @@ const routes = [
   {
     path: "shop",
     element: <ShopPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "shop/:id",
+    element: <ProductPage />,
     errorElement: <ErrorPage />,
   },
   {
