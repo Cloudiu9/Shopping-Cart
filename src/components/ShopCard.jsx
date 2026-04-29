@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import useAPIFetch from "../helpers/useAPIFetch";
+import SkeletonShopPage from "../pages/SkeletonShopPage";
 
 export default function ShopCard() {
   const { loading, items, error } = useAPIFetch();
 
   return (
-    <div className="grid grid-flow-col grid-rows-4 gap-4">
-      {loading && <div>Loading...</div>}
+    <div className="grid grid-flow-col grid-rows-5 gap-4">
+      {loading && <SkeletonShopPage />}
       {error && <h2>Error! {error}</h2>}
 
       {/* // https://flowbite.com/docs/components/card/ */}

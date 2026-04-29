@@ -3,7 +3,7 @@ import ShopCard from "../components/ShopCard";
 
 export default function ShopPage() {
   return (
-    <div id="shop">
+    <div>
       <Header />
 
       <ShopCard />

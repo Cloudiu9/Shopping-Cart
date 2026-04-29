@@ -22,8 +22,8 @@ export default function Carousel() {
       });
     }
     // If we are at the clone of the FIRST item (at the very end)
-    else if (scrollLeft >= offsetWidth * (items.length + 1)) {
-      container.scrollTo({ left: offsetWidth, behavior: "instant" });
+    else if (scrollLeft >= offsetWidth * items.length) {
+      container.scrollTo({ left: offsetWidth, behavior: "smooth" });
     }
   };
 
