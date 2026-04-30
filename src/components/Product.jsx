@@ -22,10 +22,10 @@ export default function Product() {
 
   return (
     <section
-      className="py-8 bg-white md:py-12 dark:bg-gray-900 antialiased no-scrollbar"
-      style={{ overflow: "hidden", height: "100%" }}
+      className="flex items-center bg-gray-900 antialiased overflow-y-auto no-scrollbar"
+      style={{ overflow: "hidden", height: "90vh" }}
     >
-      <div className="max-w-screen-xl px-4 mx-auto 2xl:px-0">
+      <div className="max-w-7xl px-4 mx-auto 2xl:px-0">
         <div className="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
           <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
             <img
@@ -37,12 +37,12 @@ export default function Product() {
           </div>
 
           <div className="mt-6 sm:mt-8 lg:mt-0">
-            <h1 className="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
+            <h1 className="text-xl font-semibold text-white-900 sm:text-2xl text-white">
               {/* Need to render the TITLE of the CLICKED ITEM (same as URL/params) */}
               {items && ITEM.title}
             </h1>
             <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
-              <p className="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white">
+              <p className="text-2xl font-extrabold text-white-900 sm:text-3xl text-white">
                 {items && ITEM.price}$
               </p>
 
@@ -55,7 +55,9 @@ export default function Product() {
                       {/* spreading 'undefined' over 'rating' number of array spaces (we don't care about the actual array, we just need that many stars) */}
                       {[...Array(Math.round(ITEM.rating.rate))].map(
                         (_, index) => (
-                          <Star key={index} color="yellow" />
+                          <p className="text-amber-300">
+                            <Star key={index} color="yellow" />
+                          </p>
                         ),
                       )}
 
@@ -68,12 +70,12 @@ export default function Product() {
                     </>
                   )}
                 </div>
-                <p className="text-sm font-medium leading-none text-gray-500 dark:text-gray-400">
+                <p className="text-sm font-medium leading-none text-white">
                   ({items && ITEM.rating.rate})
                 </p>
                 <a
                   href="#"
-                  className="text-sm font-medium leading-none text-gray-900 underline hover:no-underline dark:text-white"
+                  className="text-sm font-medium leading-none text-white underline hover:no-underline"
                 >
                   {items && ITEM.rating.count} Reviews
                 </a>
@@ -84,7 +86,7 @@ export default function Product() {
               {/* need to add onclick that stores the id of the item added in an array(?) */}
               <button
                 onClick={handleClick}
-                className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer"
+                className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-white-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer"
               >
                 <svg
                   className="w-5 h-5 -ms-2 me-2"

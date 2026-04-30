@@ -1,5 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import useAPIFetch from "../helpers/useAPIFetch";
+import Star from "./Star";
+import { Link } from "react-router-dom";
 
 export default function Carousel() {
   // used help with this
@@ -76,13 +78,25 @@ export default function Carousel() {
         {displayItems.map((item, index) => (
           <div
             key={index}
-            className="flex justify-center w-full flex-shrink-0 snap-center relative"
+            className="flex justify-center w-full shrink-0 snap-center relative gap-14"
           >
-            <img
-              src={item.image}
-              alt={`Slide ${index}`}
-              style={{ width: "400px", height: "350px" }}
-            />
+            <h2 className="flex items-center text-md h-10">
+              <p className="text-orange-300">
+                <Star color={"yellow"} />
+              </p>
+              <p className="text-white">{item.rating.rate}</p>
+            </h2>
+            <Link to={`/shop/${item.id}`}>
+              <img
+                src={item.image}
+                alt={`Slide ${index}`}
+                style={{ width: "400px", height: "350px" }}
+              />
+            </Link>
+
+            <h2 className="flex items-center text-2xl h-10 text-white">
+              ${item.price}
+            </h2>
           </div>
         ))}
       </div>

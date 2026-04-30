@@ -3,7 +3,7 @@
 export default function Footer() {
   return (
     <footer className="bg-white antialiased dark:bg-gray-800">
-      <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+      <div className="mx-auto max-w-7xl px-4 2xl:px-0">
         <div className="border-b border-gray-100 py-6 dark:border-gray-700 md:py-8 lg:py-16">
           <div className="items-start gap-6 md:gap-8 lg:flex 2xl:gap-24">
             <div className="grid min-w-0 flex-1 grid-cols-2 gap-6 md:gap-8 xl:grid-cols-3">
@@ -340,10 +340,9 @@ export default function Footer() {
                 <a
                   href="#"
                   title=""
-                  className="text-base font-medium text-primary-700 underline hover:no-underline dark:text-primary-500"
+                  className="mb-4 text-sm font-semibold underline text-gray-900 dark:text-white"
                 >
-                  {" "}
-                  Sign In or Create Account{" "}
+                  Sign In or Create Account
                 </a>
 
                 <hr className="border-gray-200 dark:border-gray-600" />
@@ -355,8 +354,7 @@ export default function Footer() {
                         htmlFor="email"
                         className="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
                       >
-                        {" "}
-                        Get the latest deals and more.{" "}
+                        Get the latest deals and more.
                       </label>
                       <input
                         className="block w-full rounded-lg border border-gray-300 bg-white p-3 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:w-96 lg:w-full"

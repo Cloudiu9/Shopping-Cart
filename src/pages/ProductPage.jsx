@@ -5,10 +5,10 @@ import Product from "../components/Product";
 
 export default function ProductPage() {
   return (
-    <>
+    <div className="overflow-y-auto no-scrollbar">
       <Header />
 
       <Product />
-    </>
+    </div>
   );
 }
