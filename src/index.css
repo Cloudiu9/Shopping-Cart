@@ -23,3 +23,27 @@ body {
   font-size: 2rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
+
+.arrow {
+  position: absolute;
+  background-color: transparent;
+  color: white;
+  padding: 16px;
+  font-size: 20px;
+  border: 2px solid rgb(31, 39, 141);
+  top: 50%;
+  transform: translateY(-50%); /* moves to the EXACT middle */
+  cursor: pointer;
+}
+
+.arrow:focus {
+  outline: 0;
+}
+
+.left-arrow {
+  left: calc(15vw - 10px);
+}
+
+.right-arrow {
+  right: calc(15vw - 10px);
+}

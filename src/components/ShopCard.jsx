@@ -6,7 +6,8 @@ export default function ShopCard() {
   const { loading, items, error } = useAPIFetch();
 
   return (
-    <div className="grid grid-flow-col grid-rows-5 gap-4">
+    // Responsive grid: automatically wraps items to a new row when they can't maintain a minimum width of 320px. (used help)
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-1 dark:bg-gray-900">
       {loading && <SkeletonShopPage />}
       {error && <h2>Error! {error}</h2>}
 
@@ -16,10 +17,10 @@ export default function ShopCard() {
           return (
             <div
               key={item.id}
-              className="w-full max-w-sm bg-neutral-primary-soft p-4 border border-default rounded-base shadow-xs"
+              className="w-full max-w-sm bg-neutral-primary-soft p-4 border border-default rounded-base shadow-xs text-[rgb(31,39,141)]"
             >
               <div>
-                <div className="flex items-center space-x-3 mb-6">
+                <div className="flex items-center space-x-3 mb-6 text-white">
                   <span className="bg-brand-softer border border-brand-subtle text-fg-brand-strong text-xs font-medium px-1.5 py-0.5 rounded-sm">
                     <svg
                       className="w-5 h-5 text-fg-yellow"
@@ -45,13 +46,13 @@ export default function ShopCard() {
                     />
                   </h5>
                 </Link>
-                <div className="flex items-center justify-between mt-6">
+                <div className="flex items-center justify-between mt-6 text-white">
                   <span className="text-3xl font-extrabold text-heading">
                     {item.price}$
                   </span>
                   <button
                     type="button"
-                    className="inline-flex items-center  text-black bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none"
+                    className="inline-flex items-center text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none"
                   >
                     <svg
                       className="w-4 h-4 me-1.5"
