@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import useAPIFetch from "../helpers/useAPIFetch";
 import Star from "./Star";
-import { useState } from "react";
+import useCart from "../context/cartContext";
 
 export default function Product() {
   const { items } = useAPIFetch();
@@ -9,7 +9,11 @@ export default function Product() {
   //   https://www.theodinproject.com/lessons/node-path-react-new-react-router
   //  Need to use 'useParams'
   const { id } = useParams();
-  const [cart, setCart] = useState([]);
+
+  // https://react.dev/learn/passing-data-deeply-with-context
+  // TODO Replace with context from CartContext
+  const { cart, setCart } = useCart();
+
   const ITEM = items && items[id - 1]; // -1 because item id is 1 more than useparams id
 
   // works, adds item in cart for each click
@@ -19,6 +23,8 @@ export default function Product() {
   function handleClick() {
     setCart([...cart, ITEM]);
   }
+
+  console.log(cart);
 
   return (
     <section
@@ -55,7 +61,7 @@ export default function Product() {
                       {/* spreading 'undefined' over 'rating' number of array spaces (we don't care about the actual array, we just need that many stars) */}
                       {[...Array(Math.round(ITEM.rating.rate))].map(
                         (_, index) => (
-                          <p className="text-amber-300">
+                          <p key={index} className="text-amber-300">
                             <Star key={index} color="yellow" />
                           </p>
                         ),
