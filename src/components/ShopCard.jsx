@@ -1,17 +1,42 @@
 import { Link } from "react-router-dom";
 import useAPIFetch from "../helpers/useAPIFetch";
 import SkeletonShopPage from "../pages/SkeletonShopPage";
+import useCart from "../context/cartContext";
+import Toast from "./Toast";
+import { useState } from "react";
 
 export default function ShopCard() {
+  const [showToast, setShowToast] = useState(false);
+
   const { loading, items, error } = useAPIFetch();
+
+  // need to get id from clicked card instead, there's no ID in the URL for useParams()
+  // const { id } = useParams();
+
+  const { cart, setCart } = useCart();
+
+  function handleClick(key) {
+    const ITEM = items && items[key - 1]; // -1 because item id is 1 more than item id
+    setCart([...cart, ITEM]);
+
+    // if ITEM already in cart, add +1 quantity
+
+    // Close toast after 1.5s
+    setTimeout(() => {
+      setShowToast(false);
+    }, 1500);
+
+    // Show success toast
+    setShowToast(true);
+  }
 
   return (
     // Responsive grid: automatically wraps items to a new row when they can't maintain a minimum width of 320px. (used help)
-    <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-1 dark:bg-gray-900">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-1 dark:bg-gray-900 md:grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
       {loading && <SkeletonShopPage />}
       {error && <h2>Error! {error}</h2>}
 
-      {/* // https://flowbite.com/docs/components/card/ */}
+      {/* https://flowbite.com/docs/components/card/ */}
       {items &&
         items.map((item) => {
           return (
@@ -19,6 +44,7 @@ export default function ShopCard() {
               key={item.id}
               className="w-full max-w-sm bg-neutral-primary-soft p-4 border border-default rounded-base shadow-xs text-[rgb(31,39,141)]"
             >
+              {showToast && <Toast />}
               <div>
                 <div className="flex items-center space-x-3 mb-6 text-white">
                   <span className="bg-brand-softer border border-brand-subtle text-fg-brand-strong text-xs font-medium px-1.5 py-0.5 rounded-sm">
@@ -39,20 +65,21 @@ export default function ShopCard() {
                 </div>
                 {/* https://stackoverflow.com/questions/71010211/react-route-to-a-specific-product-details-page-from-a-product-page */}
                 <Link to={`/shop/${item.id}`}>
-                  <h5 className="text-xl text-heading font-semibold tracking-tight">
+                  <div className="flex items-center justify-center">
                     <img
                       src={item.image}
                       style={{ width: "300px", height: "300px" }}
                     />
-                  </h5>
+                  </div>
                 </Link>
                 <div className="flex items-center justify-between mt-6 text-white">
                   <span className="text-3xl font-extrabold text-heading">
                     {item.price}$
                   </span>
                   <button
+                    onClick={() => handleClick(item.id)}
                     type="button"
-                    className="inline-flex items-center text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none"
+                    className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-white-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer"
                   >
                     <svg
                       className="w-4 h-4 me-1.5"
@@ -63,7 +90,6 @@ export default function ShopCard() {
                       fill="none"
                       viewBox="0 0 24 24"
                     >
-                      {/* shopping cart icon */}
                       <path
                         stroke="currentColor"
                         strokeLinecap="round"

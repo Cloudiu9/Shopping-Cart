@@ -2,8 +2,12 @@ import { useParams } from "react-router-dom";
 import useAPIFetch from "../helpers/useAPIFetch";
 import Star from "./Star";
 import useCart from "../context/cartContext";
+import Toast from "./Toast";
+import { useState } from "react";
 
 export default function Product() {
+  const [showToast, setShowToast] = useState(false);
+
   const { items } = useAPIFetch();
 
   //   https://www.theodinproject.com/lessons/node-path-react-new-react-router
@@ -11,7 +15,6 @@ export default function Product() {
   const { id } = useParams();
 
   // https://react.dev/learn/passing-data-deeply-with-context
-  // TODO Replace with context from CartContext
   const { cart, setCart } = useCart();
 
   const ITEM = items && items[id - 1]; // -1 because item id is 1 more than useparams id
@@ -22,9 +25,17 @@ export default function Product() {
   // solution ==> context
   function handleClick() {
     setCart([...cart, ITEM]);
-  }
 
-  console.log(cart);
+    // if ITEM already in cart, add +1 quantity
+
+    // Close toast after 1.5s
+    setTimeout(() => {
+      setShowToast(false);
+    }, 1500);
+
+    // Show success toast
+    setShowToast(true);
+  }
 
   return (
     <section
@@ -43,6 +54,8 @@ export default function Product() {
           </div>
 
           <div className="mt-6 sm:mt-8 lg:mt-0">
+            {showToast && <Toast />}
+
             <h1 className="text-xl font-semibold text-white-900 sm:text-2xl text-white">
               {/* Need to render the TITLE of the CLICKED ITEM (same as URL/params) */}
               {items && ITEM.title}
@@ -89,7 +102,6 @@ export default function Product() {
             </div>
 
             <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-              {/* need to add onclick that stores the id of the item added in an array(?) */}
               <button
                 onClick={handleClick}
                 className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-white-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer"
