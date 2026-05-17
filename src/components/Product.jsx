@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import useAPIFetch from "../helpers/useAPIFetch";
 import Star from "./Star";
-import useCart from "../context/cartContext";
+import useCart from "../context/CartContext";
 import Toast from "./Toast";
 import { useState } from "react";
 

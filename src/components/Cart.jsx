@@ -1,7 +1,7 @@
 // use this later for better styling: https://readymadeui.com/tailwind-ecommerce/shopping-cart
 
 import { useState, useMemo } from "react";
-import useCart from "../context/cartContext";
+import useCart from "../context/CartContext";
 import Toast from "./Toast";
 import { Link } from "react-router-dom";
 

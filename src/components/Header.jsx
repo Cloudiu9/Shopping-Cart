@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import useCart from "../context/cartContext";
+import useCart from "../context/CartContext";
 
 // https://hyperui.dev/components/marketing/headers/
 export default function Header() {

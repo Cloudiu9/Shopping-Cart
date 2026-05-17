@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import useAPIFetch from "../helpers/useAPIFetch";
 import SkeletonShopPage from "../pages/SkeletonShopPage";
-import useCart from "../context/cartContext";
+import useCart from "../context/CartContext";
 import Toast from "./Toast";
 import { useState } from "react";
 
