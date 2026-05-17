@@ -34,36 +34,16 @@ export default function Toast({ status = "add" }) {
         {status === "checkout" && (
           <div className="ms-3 text-sm font-normal">Checkout successful.</div>
         )}
-        {status !== "checkout" && (
+        {status === "add" && (
           <div className="ms-3 text-sm font-normal">
             Item added successfully.
           </div>
         )}
-        <button
-          type="button"
-          className="ms-auto flex items-center justify-center text-body hover:text-heading bg-transparent box-border border border-transparent hover:bg-neutral-secondary-medium focus:ring-4 focus:ring-neutral-tertiary font-medium leading-5 rounded text-sm h-8 w-8 focus:outline-none"
-          data-dismiss-target={`#toast-success`}
-          aria-label="Close"
-        >
-          <span className="sr-only">Close</span>
-          <svg
-            className="w-5 h-5"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18 17.94 6M18 18 6.06 6"
-            />
-          </svg>
-        </button>
+        {status === "remove" && (
+          <div className="ms-3 text-sm font-normal">
+            Item removed successfully.
+          </div>
+        )}
       </div>
     </div>
   );

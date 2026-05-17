@@ -11,7 +11,10 @@ export default function Cart() {
   const { cart, setCart } = useCart();
 
   const totalPrice = useMemo(
-    () => cart.reduce((total, item) => total + item.price, 0).toFixed(2),
+    () =>
+      cart
+        .reduce((total, item) => total + item.price * item.quantity, 0)
+        .toFixed(2),
     [cart],
   );
 
@@ -38,31 +41,28 @@ export default function Cart() {
         </>
       )}
 
-      <ul className="max-w-2xl flex flex-col justify-end">
+      <ul className="w-175 flex flex-col">
         {cart &&
           cart.map((item, idx) => {
             return (
               // gap between items to increase min distance from img to text (Samsung 49-inch monitor)
-              <li
+              <div
                 key={idx}
-                className="flex justify-between items-center bg-gray-800 my-2 px-4 py-1 gap-10"
+                // grid-cols-... specifies size for each column (image, title, price, quantity)
+                className="grid grid-cols-[100px_1fr_80px_40px] items-center bg-gray-800 my-2 py-1 gap-4"
               >
                 <Link to={`/shop/${item.id}`} className="">
                   <div className="p-1.5">
                     <img
                       src={item.image}
-                      style={{
-                        minWidth: "80px",
-                        maxWidth: "80px",
-                        minHeight: "100px",
-                        maxHeight: "100px",
-                      }}
+                      className="w-24 h-24 object-contain"
                     />
                   </div>
                 </Link>
-                <li>{item.title}</li>
+                <li className="text-center max-w-4xs">{item.title}</li>
                 <li>${item.price}</li>
-              </li>
+                <li>{item.quantity}</li>
+              </div>
             );
           })}
       </ul>

@@ -13,13 +13,11 @@ export default function ShopCard() {
   // need to get id from clicked card instead, there's no ID in the URL for useParams()
   // const { id } = useParams();
 
-  const { cart, setCart } = useCart();
+  const { addToCart } = useCart();
 
-  function handleClick(key) {
-    const ITEM = items && items[key - 1]; // -1 because item id is 1 more than item id
-    setCart([...cart, ITEM]);
-
-    // if ITEM already in cart, add +1 quantity
+  function handleAddItem(key) {
+    const item = items && items[key - 1]; // -1 because item id is 1 more than item id
+    addToCart(item);
 
     // Close toast after 1.5s
     setTimeout(() => {
@@ -77,7 +75,7 @@ export default function ShopCard() {
                     {item.price}$
                   </span>
                   <button
-                    onClick={() => handleClick(item.id)}
+                    onClick={() => handleAddItem(item.id)}
                     type="button"
                     className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-white-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer"
                   >

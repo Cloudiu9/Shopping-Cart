@@ -7,6 +7,7 @@ import { useState } from "react";
 
 export default function Product() {
   const [showToast, setShowToast] = useState(false);
+  const [toastType, setToastType] = useState("add");
 
   const { items } = useAPIFetch();
 
@@ -15,26 +16,42 @@ export default function Product() {
   const { id } = useParams();
 
   // https://react.dev/learn/passing-data-deeply-with-context
-  const { cart, setCart } = useCart();
+  const { addToCart, removeFromCart } = useCart();
 
-  const ITEM = items && items[id - 1]; // -1 because item id is 1 more than useparams id
+  const item = items && items[id - 1]; // -1 because item id is 1 more than useparams id
 
   // works, adds item in cart for each click
   // TODO display cart.length next to shop in navbar... how to pass it?
   // state needs to flow from parent to children, so I need to restructure this so it's received from Header, but then I also need it in cartpage?
   // solution ==> context
-  function handleClick() {
-    setCart([...cart, ITEM]);
-
-    // if ITEM already in cart, add +1 quantity
+  function handleAddItem(item) {
+    // https://stackoverflow.com/questions/76981527/adding-quantity-of-all-items-in-cart-and-not-just-1-number-per-specific-id
+    addToCart(item);
 
     // Close toast after 1.5s
     setTimeout(() => {
       setShowToast(false);
     }, 1500);
 
-    // Show success toast
+    // Show add toast
     setShowToast(true);
+    setToastType("add");
+    // console.log(cart);
+  }
+
+  function handleRemoveItem(item) {
+    removeFromCart(item);
+
+    // Close toast after 1.5s
+    setTimeout(() => {
+      setShowToast(false);
+    }, 1500);
+
+    // Show remove toast
+    setShowToast(true);
+    setToastType("remove");
+
+    // console.log(cart);
   }
 
   return (
@@ -47,32 +64,30 @@ export default function Product() {
           <div className="shrink-0 max-w-md lg:max-w-lg mx-auto">
             <img
               className="w-full hidden dark:block"
-              src={items && ITEM.image}
+              src={items && item.image}
               alt=""
               style={{ width: "360px", height: "auto" }}
             />
           </div>
 
           <div className="mt-6 sm:mt-8 lg:mt-0">
-            {showToast && <Toast />}
+            {showToast && <Toast status={toastType} />}
 
             <h1 className="text-xl font-semibold text-white-900 sm:text-2xl text-white">
-              {/* Need to render the TITLE of the CLICKED ITEM (same as URL/params) */}
-              {items && ITEM.title}
+              {items && item.title}
             </h1>
             <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
               <p className="text-2xl font-extrabold text-white-900 sm:text-3xl text-white">
-                {items && ITEM.price}$
+                {items && item.price}$
               </p>
 
-              {/* TODO Render stars dynamically based on rating (4.6 = 5 lit stars, 3.7 = 3 lit stars 2 unlit, get unlit star from shopcard? etc.) */}
               <div className="flex items-center gap-2 mt-2 sm:mt-0">
                 <div className="flex items-center gap-1">
                   {/* got help for this :(  */}
                   {items && (
                     <>
                       {/* spreading 'undefined' over 'rating' number of array spaces (we don't care about the actual array, we just need that many stars) */}
-                      {[...Array(Math.round(ITEM.rating.rate))].map(
+                      {[...Array(Math.round(item.rating.rate))].map(
                         (_, index) => (
                           <p key={index} className="text-amber-300">
                             <Star key={index} color="yellow" />
@@ -81,7 +96,7 @@ export default function Product() {
                       )}
 
                       {/* empty stars: 5(total) - how many there actually are */}
-                      {[...Array(5 - Math.round(ITEM.rating.rate))].map(
+                      {[...Array(5 - Math.round(item.rating.rate))].map(
                         (_, index) => (
                           <Star key={index} />
                         ),
@@ -90,47 +105,75 @@ export default function Product() {
                   )}
                 </div>
                 <p className="text-sm font-medium leading-none text-white">
-                  ({items && ITEM.rating.rate})
+                  ({items && item.rating.rate})
                 </p>
                 <a
                   href="#"
                   className="text-sm font-medium leading-none text-white underline hover:no-underline"
                 >
-                  {items && ITEM.rating.count} Reviews
+                  {items && item.rating.count} Reviews
                 </a>
               </div>
             </div>
 
-            <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-              <button
-                onClick={handleClick}
-                className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-white-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer"
-              >
-                <svg
-                  className="w-5 h-5 -ms-2 me-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="none"
-                  viewBox="0 0 24 24"
+            <div className="flex gap-x-2">
+              <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                <button
+                  onClick={() => handleAddItem(item)}
+                  className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-white-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer"
                 >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
-                  />
-                </svg>
-                Add to cart
-              </button>
+                  <svg
+                    className="w-5 h-5 -ms-2 me-2"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
+                    />
+                  </svg>
+                  Add to cart
+                </button>
+              </div>
+
+              <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
+                <button
+                  onClick={() => handleRemoveItem(item)}
+                  className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-white-900 focus:outline-none rounded-lg border hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-amber-600 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer"
+                >
+                  <svg
+                    className="w-5 h-5 -ms-2 me-2"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"
+                    />
+                  </svg>
+                  Remove from cart
+                </button>
+              </div>
             </div>
 
             <hr className="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
 
             <p className="mb-6 text-gray-500 dark:text-gray-400">
-              {items && ITEM.description}
+              {items && item.description}
             </p>
           </div>
         </div>
